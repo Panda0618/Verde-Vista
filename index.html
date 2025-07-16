@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verde Vista Farm & Resort - Your Luxurious Nature Retreat in Indore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light background for overall page */
+        }
+        /* Hero Section - Swiper Container */
+        .hero-swiper-container {
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            position: relative;
+            overflow: hidden;
+            /* Removed padding-top as navbar is now always white and fixed, no longer transparent overlaying hero */
+            box-sizing: border-box; /* Include padding in the height calculation */
+        }
+        .hero-swiper-slide {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center; /* Vertically center content */
+            justify-content: center; /* Horizontally center content */
+            text-align: center;
+            color: white;
+            height: 100%;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 90%;
+            padding: 1rem;
+            display: flex; /* Use flexbox for vertical stacking */
+            flex-direction: column;
+            align-items: center; /* Center items horizontally within the flex container */
+            justify-content: center; /* Center items vertically if there's extra space */
+        }
+        .hero-tagline-small {
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 600; /* font-semibold */
+            letter-spacing: 0.1em; /* tracking-widest */
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px; /* rounded-full */
+            margin-bottom: 1.5rem;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+            backdrop-filter: blur(2px); /* Subtle blur effect */
+        }
+        .hero-title {
+            font-size: 3.75rem; /* text-6xl */
+            font-weight: 800; /* font-extrabold */
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+        .hero-subtitle {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 300; /* font-light */
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+        }
+        .hero-tagline { /* This is the "Reconnect with nature..." tagline */
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.25rem; /* text-4xl */
+            }
+            .hero-subtitle {
+                font-size: 1.25rem; /* text-xl */
+            }
+            .hero-tagline {
+                font-size: 1rem; /* text-lg */
+            }
+            .hero-tagline-small {
+                font-size: 0.75rem; /* text-xs on mobile */
+                padding: 0.2rem 0.6rem;
+            }
+        }
+
+        /* Scroll Down Indicator */
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            color: white;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Navbar - Always white background */
+        .navbar {
+            background-color: white; /* Solid white */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Always show shadow */
+            transition: none; /* No transition needed for background color */
+        }
+        /* Navbar links styling */
+        .navbar-link {
+            color: #333; /* Default dark text color for all links */
+            font-weight: 500; /* Medium font weight */
+            transition: color 0.3s ease-in-out;
+        }
+        .navbar-link.active,
+        .navbar-link:hover {
+            color: #4CAF50; /* Green for active/hover */
+        }
+        /* Specific style for the "Home" link to be green */
+        .navbar-link.home-active {
+            color: #4CAF50; /* Green for Home */
+        }
+
+
+        /* New button styles for Hero section */
+        .btn-our-rooms {
+            background-color: #FF8C00; /* Orange */
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.4);
+        }
+        .btn-our-rooms:hover {
+            background-color: #E67E00; /* Darker Orange */
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 140, 0, 0.6);
+        }
+
+        .btn-book-room-hero {
+            background-color: white;
+            color: #333; /* Dark text */
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid #ccc; /* Subtle border */
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-book-room-hero:hover {
+            background-color: #f0f0f0; /* Slightly darker white */
+            color: #000; /* Darker text */
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #4CAF50; /* Green line under titles */
+            border-radius: 2px;
+        }
+        /* Specific style for the small "OUR ROOMS" text above the main title */
+        .section-subtitle-small {
+            color: #FF8C00; /* Orange color */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        /* Specific style for the orange "ROOMS" in the title */
+        .title-orange {
+            color: #FF8C00; /* Orange color */
+        }
+        .room-card, .team-card, .blog-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .room-card:hover, .team-card:hover, .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary { /* This class is now used for the main Book Now button outside hero */
+            background-color: #3BAE45; /* Bright green as requested */
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(59, 174, 69, 0.4); /* Subtle shadow */
+        }
+        .btn-primary:hover {
+            background-color: #2F8C39; /* Darker green on hover */
+            transform: scale(1.05); /* Scale up on hover */
+            box-shadow: 0 6px 15px rgba(59, 174, 69, 0.6); /* Deeper shadow */
+        }
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        .footer-link:hover {
+            color: #4CAF50;
+        }
+        .social-icon {
+            transition: transform 0.2s ease-in-out;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #4CAF50;
+        }
+
+        /* Custom styles for room section buttons to match the image */
+        .btn-room-view {
+            background-color: #FF8C00; /* Orange */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-room-view:hover {
+            background-color: #E67E00; /* Darker Orange */
+        }
+        .btn-room-book {
+            background-color: #1E90FF; /* Dodger Blue */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-room-book:hover {
+            background-color: #1C86EE; /* Darker Dodger Blue */
+        }
+        /* Style for the price overlay on room cards */
+        .price-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Specific Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* shadow-2xl */
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+        .modal-close-button:hover {
+            color: #FF0000; /* Red for hover */
+        }
+        .modal-amenity-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #4A5568; /* gray-700 */
+        }
+        .modal-amenity-item i {
+            color: #4CAF50; /* green-500 */
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* About Us Section Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .zoom-in.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Services Section Specific Styles and Animations */
+        .service-card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            will-change: transform, box-shadow;
+            transition: transform 0.3s ease-out; /* Base transition for card scale */
+        }
+
+        .service-card .service-icon {
+            color: #4CAF50; /* green-600 */
+            font-size: 3.5rem; /* text-5xl */
+            margin-bottom: 1rem;
+            will-change: transform, color;
+            transition: transform 0.3s ease-out, color 0.3s ease-out;
+        }
+
+        .service-card .service-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #333; /* gray-800 */
+            margin-bottom: 0.5rem;
+            will-change: transform, opacity;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
+        .service-card .service-description {
+            color: #4A5568; /* gray-600 */
+            will-change: transform, opacity;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
+        /* Custom Cursor Styles - Removed or modified to keep default cursor */
+        #custom-cursor {
+            display: none; /* Hide custom cursor element */
+        }
+
+        /* Testimonials Section Specific Styles */
+        .testimonials-slider {
+            width: 100%;
+            height: auto; /* Adjust height based on content */
+            padding-bottom: 3rem; /* Space for pagination */
+            position: relative; /* For navigation buttons */
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align cards to top */
+            gap: 2rem; /* Space between two cards */
+            padding: 1rem; /* Padding inside slide */
+        }
+
+        @media (max-width: 767px) {
+            .swiper-slide {
+                flex-direction: column; /* Stack cards vertically on mobile */
+                align-items: center;
+                gap: 1.5rem;
+            }
+        }
+
+        .testimonial-card {
+            background-color: #f0fdf4; /* Light green background for cards */
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: left;
+            flex: 1; /* Allow cards to grow and shrink */
+            min-width: 280px; /* Minimum width for cards */
+            max-width: 45%; /* Max width for two cards side-by-side */
+            position: relative;
+            will-change: transform, box-shadow;
+            transition: all 0.3s ease-out; /* Base transition for hover */
+            border: 1px solid transparent; /* For border reveal */
+            min-height: 250px; /* Adjusted to a reasonable minimum, but content should dictate height */
+            display: flex; /* Use flexbox for internal layout */
+            flex-direction: column; /* Stack content vertically */
+        }
+
+        @media (max-width: 767px) {
+            .testimonial-card {
+                max-width: 90%; /* Full width on mobile */
+            }
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-card .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            object-fit: cover;
+            border: 3px solid #4CAF50; /* Green border */
+            transition: border-color 0.3s ease-out;
+        }
+
+        .testimonial-card:hover .user-avatar {
+            border-color: #FF8C00; /* Orange border on hover */
+        }
+
+        .testimonial-card .user-name {
+            font-weight: 700; /* font-bold */
+            color: #2D3748; /* gray-900 */
+            font-size: 1.25rem; /* text-xl */
+            opacity: 0; /* Initial state for GSAP animation */
+            transform: translateY(10px);
+        }
+
+        .testimonial-card .user-role {
+            font-weight: 500; /* font-medium */
+            color: #4CAF50; /* green-600 */
+            font-size: 0.9rem; /* text-sm */
+            opacity: 0; /* Initial state for GSAP animation */
+            transform: translateY(10px);
+        }
+
+        .testimonial-card .quote-text {
+            font-style: italic;
+            color: #4A5568; /* gray-700 */
+            line-height: 1.6;
+            opacity: 0; /* Initial state for GSAP animation */
+            transform: translateY(10px);
+            flex-grow: 1; /* Allow quote text to take available space */
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps naturally */
+        }
+
+        /* Swiper Navigation Arrows */
+        .swiper-button-next, .swiper-button-prev {
+            color: #4CAF50 !important; /* Green arrows */
+            transition: color 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            color: #FF8C00 !important; /* Orange on hover */
+            transform: scale(1.1);
+        }
+
+        /* Swiper Pagination Dots */
+        .swiper-pagination-bullet {
+            background-color: #A5D6A7 !important; /* Light green */
+            opacity: 1 !important;
+            transition: background-color 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: #4CAF50 !important; /* Active green */
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Custom Cursor Element - No longer used for visual cursor, but kept for potential GSAP calculations if needed -->
+    <div id="custom-cursor"></div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar py-4 px-6 md:px-12 flex justify-between items-center fixed w-full z-50 rounded-b-lg">
+        <a href="#home" class="text-3xl font-bold text-gray-800">TRAVE<span class="text-green-600">LER</span></a>
+        <div class="hidden md:flex space-x-8">
+            <a href="#home" class="navbar-link home-active font-medium transition duration-300">Home</a>
+            <a href="#about" class="navbar-link hover:text-green-600 font-medium transition duration-300">About Us</a>
+            <a href="#accommodation" class="navbar-link hover:text-green-600 font-medium transition duration-300">Accommodation</a>
+            <a href="#services" class="navbar-link hover:text-green-600 font-medium transition duration-300">Services</a>
+            <a href="#team" class="navbar-link hover:text-green-600 font-medium transition duration-300">Our Team</a>
+            <a href="#testimonials" class="navbar-link hover:text-green-600 font-medium transition duration-300">Testimonials</a>
+            <a href="#gallery" class="navbar-link hover:text-green-600 font-medium transition duration-300">Gallery</a>
+            <a href="#blog" class="navbar-link hover:text-green-600 font-medium transition duration-300">Blog</a>
+            <a href="#contact" class="navbar-link hover:text-green-600 font-medium transition duration-300">Contact Us</a>
+        </div>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center space-y-6 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+        <button id="close-mobile-menu" class="absolute top-6 right-6 text-gray-700 focus:outline-none">
+            <i class="fas fa-times text-3xl"></i>
+        </button>
+        <a href="#home" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Home</a>
+        <a href="#about" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">About Us</a>
+        <a href="#accommodation" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Accommodation</a>
+        <a href="#services" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Services</a>
+        <a href="#team" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Our Team</a>
+        <a href="#testimonials" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Testimonials</a>
+        <a href="#gallery" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Gallery</a>
+        <a href="#blog" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Blog</a>
+        <a href="#contact" class="text-gray-800 hover:text-green-600 text-2xl font-medium" onclick="toggleMobileMenu()">Contact Us</a>
+    </div>
+
+    <!-- Hero Section with Swiper -->
+    <section id="home" class="hero-swiper-container">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide hero-swiper-slide" style="background-image: url('11.jpg');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-tagline-small">Luxury Living</div>
+                    <h1 class="hero-title">Discover A Brand Luxurious Hotel</h1>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-6">
+                        <a href="#accommodation" class="btn-our-rooms text-lg font-semibold shadow-xl">OUR ROOMS</a>
+                        <a href="#booking-form" class="btn-book-room-hero text-lg font-semibold shadow-xl">BOOK A ROOM</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide hero-swiper-slide" style="background-image: url('12.jpg');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-tagline-small">Luxury Living</div>
+                    <h1 class="hero-title">Discover A Brand Luxurious Hotel</h1>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-6">
+                        <a href="#accommodation" class="btn-our-rooms text-lg font-semibold shadow-xl">OUR ROOMS</a>
+                        <a href="#booking-form" class="btn-book-room-hero text-lg font-semibold shadow-xl">BOOK A ROOM</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide hero-swiper-slide" style="background-image: url('13.jpg');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-tagline-small">Luxury Living</div>
+                    <h1 class="hero-title">Discover A Brand Luxurious Hotel</h1>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-6">
+                        <a href="#accommodation" class="btn-our-rooms text-lg font-semibold shadow-xl">OUR ROOMS</a>
+                        <a href="#booking-form" class="btn-book-room-hero text-lg font-semibold shadow-xl">BOOK A ROOM</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination hero-pagination"></div>
+        <!-- Add Navigation (optional, but good for user control) -->
+        <div class="swiper-button-next hero-swiper-button-next"></div>
+        <div class="swiper-button-prev hero-swiper-button-prev"></div>
+
+        <!-- Scroll Down Indicator -->
+        <a href="#booking-form" class="scroll-down-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section id="booking-form" class="bg-green-100 py-12 px-6 md:px-12 relative z-20 rounded-t-lg shadow-xl">
+        <div class="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-center mb-8 text-green-800">Plan Your Stay</h2>
+            <form class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div>
+                    <label for="check-in" class="block text-gray-700 font-medium mb-2">Check In</label>
+                    <input type="date" id="check-in" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" required>
+                </div>
+                <div>
+                    <label for="check-out" class="block text-gray-700 font-medium mb-2">Check Out</label>
+                    <input type="date" id="check-out" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" required>
+                </div>
+                <div>
+                    <label for="adults" class="block text-gray-700 font-medium mb-2">Adults</label>
+                    <select id="adults" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="children" class="block text-gray-700 font-medium mb-2">Children</label>
+                    <select id="children" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="md:col-span-4 flex justify-center mt-4">
+                    <button type="submit" class="btn-primary text-xl font-semibold w-full md:w-auto">Check Availability</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 px-6 md:px-12 bg-white rounded-lg shadow-md mx-auto max-w-7xl mt-12">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <span class="section-subtitle-small fade-in-up" style="transition-delay: 0.1s;">About Us</span>
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 fade-in-up" style="transition-delay: 0.2s;">Welcome to <span class="title-orange">VERDE VISTA</span></h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6 fade-in-up" style="transition-delay: 0.3s;">
+                    Verde Vista Farm & Resort is more than just a destination; it's an experience. Nestled in the serene Revti Range, behind Aurobindo Hospital in Indore, we offer a luxurious nature retreat designed for ultimate relaxation and memorable celebrations.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed mb-6 fade-in-up" style="transition-delay: 0.4s;">
+                    Our spacious property, lush lawns, sparkling swimming pool, and fine dining experiences create the perfect backdrop for peaceful getaways, family vacations, and grand events. We pride ourselves on providing privacy, comfort, and a harmonious blend of leisure and nature.
+                </p>
+                <div class="grid grid-cols-3 gap-4 text-center mt-8">
+                    <div class="fade-in-up" style="transition-delay: 0.5s;">
+                        <div class="text-5xl font-bold text-green-600 mb-2" data-counter="25">0</div>
+                        <p class="text-gray-600 font-medium">Rooms</p>
+                    </div>
+                    <div class="fade-in-up" style="transition-delay: 0.6s;">
+                        <div class="text-5xl font-bold text-green-600 mb-2" data-counter="50">0</div>
+                        <p class="text-gray-600 font-medium">Staffs</p>
+                    </div>
+                    <div class="fade-in-up" style="transition-delay: 0.7s;">
+                        <div class="text-5xl font-bold text-green-600 mb-2" data-counter="1200">0</div>
+                        <p class="text-gray-600 font-medium">Happy Clients</p>
+                    </div>
+                </div>
+                <div class="mt-8 fade-in-up" style="transition-delay: 0.8s;">
+                    <a href="#" class="btn-primary text-lg font-semibold">EXPLORE MORE</a>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 relative grid grid-cols-2 gap-4 rounded-xl overflow-hidden shadow-xl">
+                <img src="https://placehold.co/300x200/8BC34A/ffffff?text=Resort+Image+1" alt="Resort Image 1" class="w-full h-auto object-cover rounded-xl zoom-in" style="transition-delay: 0.9s;">
+                <img src="https://placehold.co/300x200/AED581/ffffff?text=Resort+Image+2" alt="Resort Image 2" class="w-full h-auto object-cover rounded-xl zoom-in" style="transition-delay: 1.0s;">
+                <img src="https://placehold.co/300x200/66BB6A/ffffff?text=Resort+Image+3" alt="Resort Image 3" class="w-full h-auto object-cover rounded-xl zoom-in" style="transition-delay: 1.1s;">
+                <img src="https://placehold.co/300x200/4CAF50/ffffff?text=Resort+Image+4" alt="Resort Image 4" class="w-full h-auto object-cover rounded-xl zoom-in" style="transition-delay: 1.2s;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Accommodation Section -->
+    <section id="accommodation" class="py-16 px-6 md:px-12 bg-gray-50 mt-12 rounded-lg shadow-md mx-auto max-w-7xl">
+        <div class="max-w-6xl mx-auto text-center">
+            <span class="section-subtitle-small">Our Rooms</span>
+            <h2 class="text-4xl font-bold mb-8 text-gray-800 section-title">Explore Our <span class="title-orange">ROOMS</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Room Cards will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 px-6 md:px-12 bg-white mt-12 rounded-lg shadow-md mx-auto max-w-7xl">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8 text-green-800 section-title">Our Exceptional Services</h2>
+            <p class="text-lg text-gray-700 mb-12">At Verde Vista, we offer a range of services designed to make your stay truly unforgettable, blending luxury with nature's tranquility.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="service-card" data-service-index="0">
+                    <div class="service-icon"><i class="fas fa-utensils"></i></div>
+                    <h3 class="service-title">Fine Dining & Restaurant</h3>
+                    <p class="service-description">Savor exquisite flavors with our chef specials, crafted from fresh ingredients in beautiful indoor and outdoor settings.</p>
+                </div>
+                <!-- Service Card 2 -->
+                <div class="service-card" data-service-index="1">
+                    <div class="service-icon"><i class="fas fa-swimming-pool"></i></div>
+                    <h3 class="service-title">Poolside Relaxation</h3>
+                    <p class="service-description">Unwind by our sparkling swimming pool, surrounded by lush greenery for ultimate relaxation.</p>
+                </div>
+                <!-- Service Card 3 -->
+                <div class="service-card" data-service-index="2">
+                    <div class="service-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3 class="service-title">Event & Party Hosting</h3>
+                    <p class="service-description">Host memorable birthdays, anniversaries, corporate events, and festive parties in our customizable spaces.</p>
+                </div>
+                <!-- Service Card 4 -->
+                <div class="service-card" data-service-index="3">
+                    <div class="service-icon"><i class="fas fa-spa"></i></div>
+                    <h3 class="service-title">Spa & Wellness (Coming Soon)</h3>
+                    <p class="service-description">Rejuvenate your senses with our upcoming spa and wellness facilities.</p>
+                </div>
+                <!-- Service Card 5 -->
+                <div class="service-card" data-service-index="4">
+                    <div class="service-icon"><i class="fas fa-dumbbell"></i></div>
+                    <h3 class="service-title">GYM & Yoga (Coming Soon)</h3>
+                    <p class="service-description">Maintain your fitness routine with our future gym and yoga amenities.</p>
+                </div>
+                <!-- Service Card 6 -->
+                <div class="service-card" data-service-index="5">
+                    <div class="service-icon"><i class="fas fa-car"></i></div>
+                    <h3 class="service-title">Ample Parking</h3>
+                    <p class="service-description">Enjoy hassle-free access with our spacious and secure parking facilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Team Section (Placeholder) -->
+    <section id="team" class="py-16 px-6 md:px-12 bg-gray-50 mt-12 rounded-lg shadow-md mx-auto max-w-7xl">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8 text-green-800 section-title">Meet Our Dedicated Team</h2>
+            <p class="text-lg text-gray-700 mb-12">Our passionate team is committed to ensuring your stay at Verde Vista is nothing short of perfect.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden team-card p-6 text-center">
+                    <img src="https://placehold.co/150x150/C8E6C9/ffffff?text=Staff+1" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-1">John Doe</h3>
+                    <p class="text-green-600 font-medium">General Manager</p>
+                    <div class="flex justify-center space-x-3 mt-4 text-gray-500">
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden team-card p-6 text-center">
+                    <img src="https://placehold.co/150x150/C8E6C9/ffffff?text=Staff+2" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-1">Jane Smith</h3>
+                    <p class="text-green-600 font-medium">Head Chef</p>
+                    <div class="flex justify-center space-x-3 mt-4 text-gray-500">
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden team-card p-6 text-center">
+                    <img src="https://placehold.co/150x150/C8E6C9/ffffff?text=Staff+3" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-1">David Lee</h3>
+                    <p class="text-green-600 font-medium">Guest Relations</p>
+                    <div class="flex justify-center space-x-3 mt-4 text-gray-500">
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <!-- Team Member 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden team-card p-6 text-center">
+                    <img src="https://placehold.co/150x150/C8E6C9/ffffff?text=Staff+4" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-1">Sarah Chen</h3>
+                    <p class="text-green-600 font-medium">Event Coordinator</p>
+                    <div class="flex justify-center space-x-3 mt-4 text-gray-500">
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-green-600 social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 px-6 md:px-12 bg-white mt-12 rounded-lg shadow-md mx-auto max-w-7xl">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8 text-green-800 section-title">What Our Guests Say</h2>
+            <p class="text-lg text-gray-700 mb-12">Hear from those who have experienced the tranquility and luxury of Verde Vista Farm & Resort.</p>
+
+            <!-- Swiper -->
+            <div class="swiper-container testimonials-slider">
+                <div class="swiper-wrapper">
+                    <!-- Testimonial slides will be generated here by JavaScript -->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 px-6 md:px-12 bg-gray-50 mt-12 rounded-lg shadow-md mx-auto max-w-7xl">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8 text-green-800 section-title">Explore Our Photo Gallery</h2>
+            <p class="text-lg text-gray-700 mb-12">A glimpse into the luxurious nature and vibrant experiences at Verde Vista Farm & Resort.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <img src="https://placehold.co/400x300/C5E1A5/ffffff?text=Lush+Lawns" alt="Lush Lawns" class="w-full h-auto object-cover rounded-xl shadow-md transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openImageModal(this.src)">
+                <img src="https://placehold.co/400x300/AED581/ffffff?text=Swimming+Pool" alt="Swimming Pool" class="w-full h-auto object-cover rounded-xl shadow-md transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openImageModal(this.src)">
+                <img src="https://placehold.co/400x300/9CCC65/ffffff?text=Luxury+Room" alt="Luxury Room" class="w-full h-auto object-cover rounded-xl shadow-md transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openImageModal(this.src)">
+                <img src="https://placehold.co/400x300/8BC34A/ffffff?text=Fine+Dining" alt="Fine Dining" class="w-full h-auto object-cover rounded-xl shadow-md transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openImageModal(this.src)">
+                <img src="https://placehold.co/400x300/7CB342/ffffff?text=Event+Space" alt="Event Space" class="w-full h-auto object-cover rounded-xl shadow-md transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openImageModal(this.src)">
+                <img src="https://placehold.co/400x300/689F38/ffffff?text=Gazebo" alt="Gazebo" class="w-full h-auto object-cover rounded-xl shadow-md transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openImageModal(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section (Placeholder) -->
+    <section id="blog" class="py-16 px-6 md:px-12 bg-white mt-12 rounded-lg shadow-md mx-auto max-w-7xl">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8 text-green-800 section-title">Our Latest Blog Posts</h2>
+            <p class="text-lg text-gray-700 mb-12">Stay updated with tips for peaceful getaways, event planning, and local attractions in Indore.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden blog-card">
+                    <img src="https://placehold.co/400x250/DCEDC8/ffffff?text=Blog+1" alt="Blog Post Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Top 5 Reasons to Choose a Nature Retreat</h3>
+                        <p class="text-gray-600 text-sm mb-4">By Admin | July 10, 2025</p>
+                        <p class="text-gray-700 mb-4">Discover why choosing a serene nature retreat like Verde Vista is the perfect way to unwind and recharge...</p>
+                        <a href="#" class="text-green-600 hover:underline font-medium">Read More <i class="fas fa-arrow-right text-sm ml-1"></i></a>
+                    </div>
+                </div>
+                <!-- Blog Post 2 -->
+                <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden blog-card">
+                    <img src="https://placehold.co/400x250/C8E6C9/ffffff?text=Blog+2" alt="Blog Post Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Planning Your Dream Event at Verde Vista</h3>
+                        <p class="text-gray-600 text-sm mb-4">By Admin | July 05, 2025</p>
+                        <p class="text-gray-700 mb-4">From intimate gatherings to grand celebrations, learn how to plan your perfect event with us...</p>
+                        <a href="#" class="text-green-600 hover:underline font-medium">Read More <i class="fas fa-arrow-right text-sm ml-1"></i></a>
+                    </div>
+                </div>
+                <!-- Blog Post 3 -->
+                <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden blog-card">
+                    <img src="https://placehold.co/400x250/A5D6A7/ffffff?text=Blog+3" alt="Blog Post Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Explore Indore: Beyond the City Limits</h3>
+                        <p class="text-gray-600 text-sm mb-4">By Admin | June 28, 2025</p>
+                        <p class="text-gray-700 mb-4">Discover hidden gems and local attractions near Verde Vista, making your stay even more enriching...</p>
+                        <a href="#" class="text-green-600 hover:underline font-medium">Read More <i class="fas fa-arrow-right text-sm ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section (Footer) -->
+    <footer id="contact" class="bg-gray-800 text-gray-300 py-16 px-6 md:px-12 mt-12 rounded-t-lg">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <!-- About Verde Vista -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-6">Verde Vista</h3>
+                <p class="text-gray-400 leading-relaxed mb-4">Your luxurious nature retreat in Indore, offering a blend of peace, comfort, and memorable experiences.</p>
+                <div class="flex space-x-4 text-white text-xl">
+                    <a href="https://www.facebook.com/verdevistafarmandresort" target="_blank" class="hover:text-green-500 social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/verdevistaindore/" target="_blank" class="hover:text-green-500 social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-green-500 social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-green-500 social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h3 class="text-xl font-semibold text-white mb-6">Get In Touch</h3>
+                <p class="mb-3"><i class="fas fa-map-marker-alt mr-3 text-green-500"></i>Revti Range, Behind Aurobindo Hospital, Indore-Ujjain State Highway, Indore, MP 452007</p>
+                <p class="mb-3"><i class="fas fa-phone-alt mr-3 text-green-500"></i>+91 9325555932</p>
+                <p class="mb-3"><i class="fas fa-phone-alt mr-3 text-green-500"></i>+91 91111-77785</p>
+                <p><i class="fas fa-envelope mr-3 text-green-500"></i>info@verdevista.com</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-xl font-semibold text-white mb-6">Quick Links</h3>
+                <ul>
+                    <li class="mb-2"><a href="#about" class="footer-link hover:text-green-500 transition duration-300">About Us</a></li>
+                    <li class="mb-2"><a href="#contact" class="footer-link hover:text-green-500 transition duration-300">Contact Us</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link hover:text-green-500 transition duration-300">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link hover:text-green-500 transition duration-300">Terms & Conditions</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link hover:text-green-500 transition duration-300">Support</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link hover:text-green-500 transition duration-300">FAQs</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter & Map -->
+            <div>
+                <h3 class="text-xl font-semibold text-white mb-6">Newsletter</h3>
+                <p class="mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                <form class="flex">
+                    <input type="email" placeholder="Your Email" class="p-3 rounded-l-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-green-500 w-full">
+                    <button type="submit" class="bg-green-600 text-white p-3 rounded-r-lg hover:bg-green-700 transition duration-300"><i class="fas fa-paper-plane"></i></button>
+                </form>
+                <div class="mt-6">
+                    <h3 class="text-xl font-semibold text-white mb-4">Our Location</h3>
+                    <!-- Embedded Google Map Placeholder -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.966952726487!2d75.9189033750953!3d22.75628527937326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd02213876e9%3A0x70529d185c72d62!2sAurobindo%20Hospital!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-lg shadow-md">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-500">
+            &copy; <span id="current-year"></span> Verde Vista Farm & Resort. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- View Details Modal -->
+    <div id="view-details-modal" class="modal-overlay hidden">
+        <div class="modal-content w-full md:w-2/3 lg:w-1/2">
+            <button class="modal-close-button" onclick="closeViewDetailsModal()">&times;</button>
+            <h2 id="modal-room-title" class="text-3xl font-bold text-green-800 mb-4"></h2>
+            <img id="modal-room-image" src="" alt="Room Image" class="w-full h-64 object-cover rounded-lg mb-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <p class="text-lg text-gray-700 font-semibold mb-2">Price:</p>
+                    <p id="modal-room-price" class="text-2xl font-bold text-green-700"></p>
+                </div>
+                <div>
+                    <p class="text-lg text-gray-700 font-semibold mb-2">Room Size:</p>
+                    <p id="modal-room-size" class="text-xl text-gray-800"></p>
+                </div>
+                <div>
+                    <p class="text-lg text-gray-700 font-semibold mb-2">Max Occupancy:</p>
+                    <p id="modal-room-occupancy" class="text-xl text-gray-800"></p>
+                </div>
+            </div>
+
+            <p class="text-lg text-gray-700 font-semibold mb-2">Description:</p>
+            <p id="modal-room-description" class="text-gray-600 leading-relaxed mb-6"></p>
+
+            <p class="text-lg text-gray-700 font-semibold mb-4">Amenities:</p>
+            <div id="modal-room-amenities" class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-gray-700">
+                <!-- Amenities will be dynamically loaded here -->
+            </div>
+            
+            <div class="mt-8 flex justify-center">
+                <a href="#booking-form" class="btn-primary text-lg font-semibold px-8 py-3" onclick="closeViewDetailsModal(); openBookNowModal();">Book This Room Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Now Modal -->
+    <div id="book-now-modal" class="modal-overlay hidden">
+        <div class="modal-content w-full md:w-1/2 lg:w-1/3 text-center">
+            <button class="modal-close-button" onclick="closeBookNowModal()">&times;</button>
+            <h2 class="text-3xl font-bold text-green-800 mb-4">Contact Verde Vista Farm & Resort</h2>
+            <p class="text-lg text-gray-700 mb-6">Ready to book your luxurious nature retreat? Contact us directly!</p>
+            
+            <div class="space-y-4 mb-8">
+                <div class="flex items-center justify-center text-gray-800 text-xl">
+                    <i class="fas fa-phone-alt mr-3 text-green-500"></i>
+                    <span>+91 9325555932</span>
+                </div>
+                <div class="flex items-center justify-center text-gray-800 text-xl">
+                    <i class="fas fa-phone-alt mr-3 text-green-500"></i>
+                    <span>+91 91111-77785</span>
+                </div>
+                <div class="flex items-center justify-center text-gray-800 text-xl">
+                    <i class="fas fa-envelope mr-3 text-green-500"></i>
+                    <span>info@verdevista.com</span>
+                </div>
+                <div class="flex items-center justify-center text-gray-800 text-xl">
+                    <i class="fas fa-map-marker-alt mr-3 text-green-500"></i>
+                    <a href="https://www.google.com/maps/search/Revti+Range,+Behind+Aurobindo+Hospital,+Indore-Ujjain+State+Highway,+Indore,+Madhya+Pradesh+452007" target="_blank" class="text-blue-600 hover:underline">View on Map</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="tel:+919325555932" class="btn-primary text-lg font-semibold px-8 py-3 flex items-center justify-center">
+                    <i class="fas fa-phone mr-2"></i> Call Now
+                </a>
+                <a href="mailto:info@verdevista.com" class="btn-secondary text-lg font-semibold px-8 py-3 flex items-center justify-center">
+                    <i class="fas fa-envelope mr-2"></i> Send Email
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal (Existing) -->
+    <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+        <div class="relative w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 rounded-lg overflow-hidden">
+            <button class="absolute top-4 right-4 text-white text-3xl z-50" onclick="closeVideoModal()">&times;</button>
+            <iframe id="youtube-video-player" width="100%" height="450" src="https://www.youtube.com/embed/16K90hz7A64?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Image Modal (Existing) -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+        <div class="relative w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 rounded-lg overflow-hidden">
+            <button class="absolute top-4 right-4 text-white text-3xl z-50" onclick="closeImageModal()">&times;</button>
+            <img id="modal-image" src="" alt="Enlarged Image" class="w-full h-auto max-h-[80vh] object-contain rounded-lg">
+        </div>
+    </div>
+
+    <script>
+        // Room Data (Centralized for easy management and modal population)
+        const rooms = [
+            {
+                name: "Verde Vista Premium Room",
+                price: "₹4,999.00",
+                image: "https://placehold.co/400x250/A5D6A7/000000?text=Premium+Room", // Updated image
+                description: "Enjoy a comfortable stay with amenities like AC, Smart TV, Geyser, Wifi, Hair Dryer, Tea Kettle, Washroom Kit, Breakfast, Property Access, Indoor Games, and a Private Mini Garden.",
+                size: "300 sq ft",
+                occupancy: "2 Adults + 1 Child",
+                amenities: [
+                    { icon: "fas fa-snowflake", text: "Air Conditioning (AC)" },
+                    { icon: "fas fa-tv", text: "Smart TV" },
+                    { icon: "fas fa-wifi", text: "Wi-Fi" },
+                    { icon: "fas fa-water", text: "Geyser (Hot Water)" },
+                    { icon: "fas fa-cut", text: "Hair Dryer" },
+                    { icon: "fas fa-coffee", text: "Tea Kettle" },
+                    { icon: "fas fa-toilet", text: "Washroom Kit" },
+                    { icon: "fas fa-bread-slice", text: "Breakfast" },
+                    { icon: "fas fa-door-open", text: "Property Access" },
+                    { icon: "fas fa-gamepad", text: "Indoor Games" },
+                    { icon: "fas fa-tree", text: "Private Mini Garden" }
+                ],
+                stars: 5
+            },
+            {
+                name: "Verde Vista Suite Room",
+                price: "₹9,999.00",
+                image: "https://placehold.co/400x250/66BB6A/000000?text=Suite+Room", // Updated image
+                description: "Luxurious suite with Living Room, Master Bedroom, Jacuzzi, AC, TV, Fridge, Geyser, Wifi, Hair Dryer, Tea Kettle, Washroom Kit, Balcony, Private Rooftop Garden, Floating Breakfast, Bathrobe, and Heater.",
+                size: "600 sq ft",
+                occupancy: "4 Adults + 2 Children",
+                amenities: [
+                    { icon: "fas fa-couch", text: "Living Room" },
+                    { icon: "fas fa-bed", text: "Master Bedroom" },
+                    { icon: "fas fa-hot-tub", text: "Jacuzzi" },
+                    { icon: "fas fa-tv", text: "TV" },
+                    { icon: "fas fa-snowflake", text: "Air Conditioning (AC)" },
+                    { icon: "fas fa-refrigerator", text: "Fridge" },
+                    { icon: "fas fa-water", text: "Geyser (Hot Water)" },
+                    { icon: "fas fa-wifi", text: "Wi-Fi" },
+                    { icon: "fas fa-cut", text: "Hair Dryer" },
+                    { icon: "fas fa-coffee", text: "Tea Kettle" },
+                    { icon: "fas fa-toilet", text: "Washroom Kit" },
+                    { icon: "fas fa-city", text: "Balcony" },
+                    { icon: "fas fa-cloud", text: "Private Rooftop Garden" },
+                    { icon: "fas fa-mug-hot", text: "Floating Breakfast" },
+                    { icon: "fas fa-door-open", text: "Property Access" },
+                    { icon: "fas fa-bath", text: "Bathrobe" },
+                    { icon: "fas fa-temperature-low", text: "Heater" }
+                ],
+                stars: 5
+            },
+            {
+                name: "CASA INN DELUXE ROOM",
+                price: "₹999.00",
+                image: "https://placehold.co/400x250/4CAF50/000000?text=Deluxe+Room", // Updated image
+                description: "Enjoy a relaxing and well-equipped stay with all modern comforts, including Air Conditioning (AC), LED TV with Netflix & OTT Subscription, High-Speed Wi-Fi, Geyser (Hot Water Facility), Electric Kettle with Tea/Coffee Setup, Premium Toiletries, Fresh Towels & Clean Linen, and Comfortable & Cozy Bedding.",
+                size: "250 sq ft",
+                occupancy: "2 Adults",
+                amenities: [
+                    { icon: "fas fa-snowflake", text: "Air Conditioning (AC)" },
+                    { icon: "fas fa-tv", text: "LED TV with Netflix & OTT" },
+                    { icon: "fas fa-wifi", text: "High-Speed Wi-Fi" },
+                    { icon: "fas fa-water", text: "Geyser (Hot Water)" },
+                    { icon: "fas fa-coffee", text: "Electric Kettle with Tea/Coffee" },
+                    { icon: "fas fa-toilet", text: "Premium Toiletries" },
+                    { icon: "fas fa-tshirt", text: "Fresh Towels & Clean Linen" },
+                    { icon: "fas fa-bed", text: "Comfortable & Cozy Bedding" }
+                ],
+                stars: 4
+            },
+            {
+                name: "CASA INN PREMIUM ROOM",
+                price: "₹1,199.00",
+                image: "https://placehold.co/400x250/8BC34A/000000?text=Premium+Inn+Room", // Updated image
+                description: "Designed for comfort, style, and a touch of luxury – ideal for business and leisure stays. Includes Free High-Speed Wi-Fi Access, Air Conditioning (AC), Android Smart TV, Tea/Coffee Maker, Complimentary Mineral Water, Telephone, Work Desk, Sofa Sitting Area, Private Balcony, Dental Kit, Comfortable Bedding & Fresh Linen, and Premium Toiletries & Towels.",
+                size: "350 sq ft",
+                occupancy: "2 Adults + 1 Child",
+                amenities: [
+                    { icon: "fas fa-wifi", text: "Free High-Speed Wi-Fi" },
+                    { icon: "fas fa-snowflake", text: "Air Conditioning (AC)" },
+                    { icon: "fas fa-tv", text: "Android Smart TV" },
+                    { icon: "fas fa-coffee", text: "Tea/Coffee Maker" },
+                    { icon: "fas fa-bottle-water", text: "Complimentary Mineral Water" },
+                    { icon: "fas fa-phone", text: "Telephone" },
+                    { icon: "fas fa-briefcase", text: "Work Desk" },
+                    { icon: "fas fa-couch", text: "Sofa Sitting Area" },
+                    { icon: "fas fa-city", text: "Private Balcony" },
+                    { icon: "fas fa-tooth", text: "Dental Kit" },
+                    { icon: "fas fa-bed", text: "Comfortable Bedding & Fresh Linen" },
+                    { icon: "fas fa-toilet", text: "Premium Toiletries & Towels" }
+                ],
+                stars: 4
+            },
+            {
+                name: "CASA INN SUITE ROOM",
+                price: "₹1,499.00",
+                image: "https://placehold.co/400x250/7CB342/000000?text=Inn+Suite+Room", // Updated image
+                description: "Relax. Refresh. Rejuvenate – luxury and entertainment, all in one place. Suite Room Amenities include Air Conditioner (AC), Bath Tub for a Relaxing Soak, Soft Bathrobe, Slippers & Premium Towels, Android TV with Netflix & OTT Subscriptions, Tea/Coffee Maker, Complimentary Mineral Water, Telephone, Large Vanity Area, Dental Kit, Essential Toiletries, and Hair Dryer.",
+                size: "450 sq ft",
+                occupancy: "3 Adults + 2 Children",
+                amenities: [
+                    { icon: "fas fa-snowflake", text: "Air Conditioner (AC)" },
+                    { icon: "fas fa-bath", text: "Bath Tub" },
+                    { icon: "fas fa-tshirt", text: "Soft Bathrobe, Slippers & Towels" },
+                    { icon: "fas fa-tv", text: "Android TV with Netflix & OTT" },
+                    { icon: "fas fa-coffee", text: "Tea/Coffee Maker" },
+                    { icon: "fas fa-bottle-water", text: "Complimentary Mineral Water" },
+                    { icon: "fas fa-phone", text: "Telephone" },
+                    { icon: "fas fa-mirror", text: "Large Vanity Area" },
+                    { icon: "fas fa-tooth", text: "Dental Kit" },
+                    { icon: "fas fa-cut", text: "Hair Dryer" }
+                ],
+                stars: 4
+            },
+            {
+                name: "HOTEL CASTLE INN ROOMS",
+                price: "₹599.00",
+                image: "https://placehold.co/400x250/689F38/000000?text=Castle+Inn+Room", // Updated image
+                description: "A comfortable stay with essential amenities including Ac, Smart Tv, Gizer, Wifi, Toiletries, and Comfort Bedding.",
+                size: "200 sq ft",
+                occupancy: "2 Adults",
+                amenities: [
+                    { icon: "fas fa-snowflake", text: "AC" },
+                    { icon: "fas fa-tv", text: "Smart TV" },
+                    { icon: "fas fa-water", text: "Gizer" },
+                    { icon: "fas fa-wifi", text: "Wifi" },
+                    { icon: "fas fa-toilet", text: "Toiletries" },
+                    { icon: "fas fa-bed", text: "Comfort Bedding" }
+                ],
+                stars: 3
+            },
+            {
+                name: "HOTEL SAFFRON INN ROOM",
+                price: "₹699.00",
+                image: "https://placehold.co/400x250/4CAF50/000000?text=Saffron+Inn+Room", // Updated image
+                description: "Cozy room featuring Ac, Smart Tv, wifi, Gizer, toiletries, and Sofa.",
+                size: "220 sq ft",
+                occupancy: "2 Adults",
+                amenities: [
+                    { icon: "fas fa-snowflake", text: "AC" },
+                    { icon: "fas fa-tv", text: "Smart TV" },
+                    { icon: "fas fa-wifi", text: "Wifi" },
+                    { icon: "fas fa-water", text: "Gizer" },
+                    { icon: "fas fa-toilet", text: "Toiletries" },
+                    { icon: "fas fa-couch", text: "Sofa" }
+                ],
+                stars: 3
+            }
+        ];
+
+        // Testimonial Data
+        const testimonialsData = [
+            {
+                name: "Priya Sharma",
+                role: "Family Vacationer",
+                quote: "Verde Vista is an absolute gem! The lush greenery, the serene pool, and the comfortable rooms made our family vacation truly special. The staff was incredibly welcoming and attentive. Highly recommend for a peaceful escape!",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=P1"
+            },
+            {
+                name: "Rahul Singh",
+                role: "Event Organizer",
+                quote: "We hosted our corporate event at Verde Vista, and it was a huge success. The event spaces are versatile, the catering was fantastic, and the natural ambiance added a unique touch. A perfect venue for any celebration!",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=R1"
+            },
+            {
+                name: "Anjali Mehta",
+                role: "Solo Traveler",
+                quote: "A truly peaceful and rejuvenating retreat. The quiet surroundings and excellent service made my solo trip unforgettable. I felt completely at ease and refreshed. Will definitely visit again!",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=A1"
+            },
+            {
+                name: "Vikram Kumar",
+                role: "Couple's Getaway",
+                quote: "My partner and I had an amazing time at Verde Vista. The romantic setting, delicious food, and attentive staff created the perfect atmosphere for our anniversary. Highly recommended for couples!",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=V1"
+            },
+            {
+                name: "Sneha Reddy",
+                role: "Nature Enthusiast",
+                quote: "The natural beauty surrounding Verde Vista is breathtaking. I loved the lush gardens and the fresh air. It's truly a haven for nature lovers seeking luxury and tranquility.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=S1"
+            },
+            {
+                name: "Arjun Desai",
+                role: "Business Traveler",
+                quote: "Even on a business trip, Verde Vista provided a relaxing environment. The Wi-Fi was reliable, and the quiet spaces allowed me to work efficiently while enjoying the serene surroundings. Great for work and leisure.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=A2"
+            },
+            {
+                name: "Deepika Singh",
+                role: "Weekend Escapist",
+                quote: "Just what I needed for a quick weekend escape from the city. Verde Vista offers the perfect blend of luxury and nature. The pool was fantastic, and the food was delightful. I left feeling completely refreshed.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=D1"
+            },
+            {
+                name: "Rajeshwari Iyer",
+                role: "Food Critic",
+                quote: "The dining experience at Verde Vista was exceptional! Every dish was a culinary masterpiece, prepared with fresh, local ingredients. A true gastronomic delight that exceeded my expectations.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=R2"
+            },
+            {
+                name: "Kabir Khan",
+                role: "Adventure Seeker",
+                quote: "While primarily a relaxing retreat, the nearby trails and natural beauty offered enough adventure for me. Coming back to the comfort of Verde Vista after a day of exploration was pure bliss.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=K1"
+            },
+            {
+                name: "Fatima Ali",
+                role: "Relaxation Seeker",
+                quote: "The tranquility here is unmatched. I spent hours by the pool and in the garden, simply unwinding. It’s the perfect place to disconnect from stress and reconnect with yourself.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=F1"
+            },
+            {
+                name: "Gaurav Sharma",
+                role: "Family Man",
+                quote: "My kids absolutely loved the open spaces and the pool. It’s rare to find a place that caters so well to both adults and children. We made beautiful family memories here.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=G1"
+            },
+            {
+                name: "Nisha Patel",
+                role: "Honeymooner",
+                quote: "Our honeymoon at Verde Vista was magical. The suite was stunning, the privacy was perfect, and every detail was taken care of. It truly felt like a dream come true.",
+                avatar: "https://placehold.co/80x80/B2DFDB/ffffff?text=N1"
+            }
+        ];
+
+        // --- MODAL FUNCTIONS (GLOBAL SCOPE) ---
+
+        // Video Modal functionality
+        const videoModal = document.getElementById('video-modal');
+        const youtubeVideoPlayer = document.getElementById('youtube-video-player');
+
+        function openVideoModal() {
+            videoModal.classList.add('active'); // Use 'active' class for transitions
+            videoModal.classList.remove('hidden');
+            // Autoplay the video when modal opens
+            youtubeVideoPlayer.src = "https://www.youtube.com/embed/16K90hz7A64?autoplay=1";
+        }
+
+        function closeVideoModal() {
+            videoModal.classList.remove('active'); // Use 'active' class for transitions
+            setTimeout(() => { // Hide after transition
+                videoModal.classList.add('hidden');
+            }, 300);
+            // Stop the video when modal closes
+            youtubeVideoPlayer.src = "https://www.youtube.com/embed/16K90hz7A64?autoplay=0";
+        }
+
+        // Image Modal functionality
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+
+        function openImageModal(src) {
+            modalImage.src = src;
+            imageModal.classList.add('active'); // Use 'active' class for transitions
+            imageModal.classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            imageModal.classList.remove('active'); // Use 'active' class for transitions
+            setTimeout(() => { // Hide after transition
+                imageModal.classList.add('hidden');
+            }, 300);
+            modalImage.src = ''; // Clear the image source
+        }
+
+        // View Details Modal functionality
+        const viewDetailsModal = document.getElementById('view-details-modal');
+        const modalRoomTitle = document.getElementById('modal-room-title');
+        const modalRoomImage = document.getElementById('modal-room-image');
+        const modalRoomPrice = document.getElementById('modal-room-price');
+        const modalRoomSize = document.getElementById('modal-room-size');
+        const modalRoomOccupancy = document.getElementById('modal-room-occupancy');
+        const modalRoomDescription = document.getElementById('modal-room-description');
+        const modalRoomAmenities = document.getElementById('modal-room-amenities');
+
+        function openViewDetailsModal(roomIndex) {
+            const room = rooms[roomIndex];
+            modalRoomTitle.textContent = room.name;
+            modalRoomImage.src = room.image;
+            modalRoomPrice.textContent = `${room.price}/Night`;
+            modalRoomSize.textContent = room.size;
+            modalRoomOccupancy.textContent = room.occupancy;
+            modalRoomDescription.textContent = room.description;
+            
+            // Clear previous amenities
+            modalRoomAmenities.innerHTML = '';
+            room.amenities.forEach(amenity => {
+                const amenityItem = document.createElement('div');
+                amenityItem.className = 'modal-amenity-item';
+                amenityItem.innerHTML = `<i class="${amenity.icon}"></i> <span>${amenity.text}</span>`;
+                modalRoomAmenities.appendChild(amenityItem);
+            });
+
+            viewDetailsModal.classList.add('active');
+            viewDetailsModal.classList.remove('hidden');
+        }
+
+        function closeViewDetailsModal() {
+            viewDetailsModal.classList.remove('active');
+            setTimeout(() => {
+                viewDetailsModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Book Now Modal functionality
+        const bookNowModal = document.getElementById('book-now-modal');
+
+        function openBookNowModal() {
+            bookNowModal.classList.add('active');
+            bookNowModal.classList.remove('hidden');
+        }
+
+        function closeBookNowModal() {
+            bookNowModal.classList.remove('active');
+            setTimeout(() => {
+                bookNowModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // --- END MODAL FUNCTIONS ---
+
+
+        // All other JavaScript code should be within this DOMContentLoaded listener
+        document.addEventListener('DOMContentLoaded', () => {
+            // Function to generate room cards
+            function generateRoomCards() {
+                const roomContainer = document.querySelector('#accommodation .grid');
+                roomContainer.innerHTML = ''; // Clear existing cards
+
+                rooms.forEach((room, index) => {
+                    const roomCard = `
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden room-card relative">
+                            <img src="${room.image}" alt="${room.name}" class="w-full h-56 object-cover">
+                            <div class="price-overlay">${room.price}/Night</div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold text-gray-800 mb-2">${room.name}</h3>
+                                <div class="flex justify-start text-orange-400 mb-4">
+                                    ${Array(room.stars).fill('<i class="fas fa-star"></i>').join('')}
+                                    ${Array(5 - room.stars).fill('<i class="far fa-star"></i>').join('')}
+                                </div>
+                                <div class="flex items-center space-x-4 text-gray-500 text-sm mb-4">
+                                    ${room.amenities.slice(0, 3).map(amenity => `
+                                        <span class="flex items-center" title="${amenity.text}">
+                                            <i class="${amenity.icon} mr-2"></i> ${amenity.text.split(' ')[0]}
+                                        </span>
+                                    `).join('')}
+                                    ${room.amenities.length > 3 ? `<span class="flex items-center">...</span>` : ''}
+                                </div>
+                                <p class="text-gray-600 text-sm mb-6">
+                                    ${room.description.length > 100 ? room.description.substring(0, 100) + '...' : room.description}
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="openViewDetailsModal(${index})" class="btn-room-view text-sm font-semibold">VIEW DETAIL</button>
+                                    <button onclick="openBookNowModal()" class="btn-room-book text-sm font-semibold">BOOK NOW</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    roomContainer.innerHTML += roomCard;
+                });
+            }
+
+            // Function to generate testimonial slides
+            function generateTestimonialSlides() {
+                const swiperWrapper = document.querySelector('.testimonials-slider .swiper-wrapper');
+                swiperWrapper.innerHTML = ''; // Clear existing slides
+
+                // Group testimonials into pairs
+                for (let i = 0; i < testimonialsData.length; i += 2) {
+                    const slide = document.createElement('div');
+                    slide.classList.add('swiper-slide');
+
+                    const testimonial1 = testimonialsData[i];
+                    const testimonial2 = testimonialsData[i + 1]; // Can be undefined if odd number of testimonials
+
+                    if (testimonial1) {
+                        slide.innerHTML += `
+                            <div class="testimonial-card">
+                                <div class="user-info">
+                                    <img src="${testimonial1.avatar}" alt="${testimonial1.name}" class="user-avatar">
+                                    <div>
+                                        <h4 class="user-name">${testimonial1.name}</h4>
+                                        <p class="user-role">${testimonial1.role}</p>
+                                    </div>
+                                </div>
+                                <p class="quote-text">"${testimonial1.quote}"</p>
+                            </div>
+                        `;
+                    }
+                    if (testimonial2) {
+                        slide.innerHTML += `
+                            <div class="testimonial-card">
+                                <div class="user-info">
+                                    <img src="${testimonial2.avatar}" alt="${testimonial2.name}" class="user-avatar">
+                                    <div>
+                                        <h4 class="user-name">${testimonial2.name}</h4>
+                                        <p class="user-role">${testimonial2.role}</p>
+                                    </div>
+                                </div>
+                                <p class="quote-text">"${testimonial2.quote}"</p>
+                            </div>
+                        `;
+                    }
+                    swiperWrapper.appendChild(slide);
+                }
+            }
+
+            // GSAP animation for hero content
+            function animateHeroContent(contentElement) {
+                const smallTagline = contentElement.querySelector('.hero-tagline-small');
+                const title = contentElement.querySelector('.hero-title');
+                const buttons = contentElement.querySelectorAll('.btn-our-rooms, .btn-book-room-hero');
+
+                gsap.fromTo(smallTagline, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" });
+                gsap.fromTo(title, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.2 });
+                gsap.fromTo(buttons, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)", delay: 0.4, stagger: 0.1 });
+            }
+
+            function resetHeroContent(contentElement) {
+                const smallTagline = contentElement.querySelector('.hero-tagline-small');
+                const title = contentElement.querySelector('.hero-title');
+                const buttons = contentElement.querySelectorAll('.btn-our-rooms, .btn-book-room-hero');
+                gsap.set([smallTagline, title], { opacity: 0, y: 30 });
+                gsap.set(buttons, { opacity: 0, scale: 0.8 });
+            }
+
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('translate-x-full');
+            }
+
+            // Function to animate testimonial card content
+            function animateTestimonialCard(slideElement) {
+                const cards = slideElement.querySelectorAll('.testimonial-card');
+                cards.forEach((card, index) => {
+                    const userName = card.querySelector('.user-name');
+                    const userRole = card.querySelector('.user-role');
+                    const quoteText = card.querySelector('.quote-text');
+
+                    // Staggered fade-in and slide-up for text elements
+                    gsap.fromTo([userName, userRole, quoteText],
+                        { opacity: 0, y: 10 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            ease: "power2.out",
+                            stagger: 0.1, // Stagger animation for each text element
+                            delay: index * 0.2 // Delay animation for the second card in the pair
+                        }
+                    );
+                });
+            }
+
+            // Function to reset testimonial card content (for smooth re-entry)
+            function resetTestimonialCard(slideElement) {
+                const cards = slideElement.querySelectorAll('.testimonial-card');
+                cards.forEach(card => {
+                    const userName = card.querySelector('.user-name');
+                    const userRole = card.querySelector('.user-role');
+                    const quoteText = card.querySelector('.quote-text');
+                    gsap.set([userName, userRole, quoteText], { opacity: 0, y: 10 });
+                });
+            }
+
+            // Call generateRoomCards on page load
+            generateRoomCards();
+            // Generate testimonials
+            generateTestimonialSlides();
+
+            // Initialize Hero Swiper
+            const heroSwiper = new Swiper('.hero-swiper-container', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                speed: 1000, // Slower speed for elegant fade
+                effect: 'fade', // Fade transition
+                fadeEffect: {
+                    crossFade: true,
+                },
+                pagination: {
+                    el: '.hero-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.hero-swiper-button-next',
+                    prevEl: '.hero-swiper-button-prev',
+                },
+                on: {
+                    init: function() {
+                        // Animate initial hero content
+                        const activeSlideContent = this.slides[this.activeIndex].querySelector('.hero-content');
+                        animateHeroContent(activeSlideContent);
+                    },
+                    slideChangeTransitionStart: function() {
+                        // Reset previous slide content
+                        const previousSlideContent = this.slides[this.previousIndex].querySelector('.hero-content');
+                        resetHeroContent(previousSlideContent);
+                    },
+                    slideChangeTransitionEnd: function() {
+                        // Animate new active slide content
+                        const activeSlideContent = this.slides[this.activeIndex].querySelector('.hero-content');
+                        animateHeroContent(activeSlideContent);
+                    }
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    if (href === '#') {
+                        // Scroll to the top of the page
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    } else if (href && href.length > 1) { // Ensure it's not just '#' and not null/empty
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Counter animation for About Us section
+            const counters = document.querySelectorAll('[data-counter]');
+            const speed = 200; // The lower the speed, the faster the count
+
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-counter');
+                        const count = +counter.innerText;
+                        const increment = target / speed;
+
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + increment);
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+            };
+
+            // Intersection Observer to trigger animations when section is in view
+            const aboutSection = document.getElementById('about');
+            const aboutElements = aboutSection.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .zoom-in');
+
+            const aboutObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('.fade-in-up').forEach((el, i) => {
+                            setTimeout(() => el.classList.add('animate'), i * 100);
+                        });
+                        entry.target.querySelectorAll('.fade-in-left').forEach((el, i) => {
+                            setTimeout(() => el.classList.add('animate'), i * 100);
+                        });
+                        entry.target.querySelectorAll('.fade-in-right').forEach((el, i) => {
+                            setTimeout(() => el.classList.add('animate'), i * 100);
+                        });
+                        entry.target.querySelectorAll('.zoom-in').forEach((el, i) => {
+                            setTimeout(() => el.classList.add('animate'), i * 100);
+                        });
+                        animateCounters(); // Trigger counters when about section is visible
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, { threshold: 0.2 }); // Trigger when 20% of the section is visible
+
+            if (aboutSection) {
+                aboutObserver.observe(aboutSection);
+            }
+
+            // Get current year for footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Mobile menu event listeners
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            closeMobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+            // Close modal when clicking outside the video
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    closeVideoModal();
+                }
+            });
+
+            // Close modal when clicking outside the image
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) {
+                    closeImageModal();
+                }
+            });
+
+            viewDetailsModal.addEventListener('click', (e) => {
+                if (e.target === viewDetailsModal) {
+                    closeViewDetailsModal();
+                }
+            });
+
+            bookNowModal.addEventListener('click', (e) => {
+                if (e.target === bookNowModal) {
+                    closeBookNowModal();
+                }
+            });
+
+            // GSAP Animations for Services Section
+            gsap.registerPlugin(ScrollTrigger);
+
+            const serviceCards = gsap.utils.toArray(".service-card");
+
+            // Initial state for service card elements
+            gsap.set(serviceCards, { autoAlpha: 0, y: 50 });
+            gsap.set(".service-card .service-icon", { scale: 1, rotate: 0, color: "#4CAF50" });
+            gsap.set(".service-card .service-title", { y: 0, opacity: 1 });
+            gsap.set(".service-card .service-description", { y: 0, opacity: 1 });
+
+            // Animate service cards on scroll into view
+            ScrollTrigger.batch(serviceCards, {
+                interval: 0.1, // delay between each card's animation
+                batchMax: 3, // animate 3 cards at a time
+                onEnter: batch => gsap.to(batch, {
+                    autoAlpha: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    overwrite: true,
+                    ease: "power3.out"
+                }),
+                onLeave: batch => gsap.set(batch, { autoAlpha: 0, y: 50, overwrite: true }),
+                onEnterBack: batch => gsap.to(batch, {
+                    autoAlpha: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    overwrite: true,
+                    ease: "power3.out"
+                }),
+                onLeaveBack: batch => gsap.set(batch, { autoAlpha: 0, y: 50, overwrite: true }),
+                // markers: true, // Uncomment for debugging scroll trigger
+            });
+
+            // Service Card Hover Effects
+            serviceCards.forEach(card => {
+                const icon = card.querySelector('.service-icon');
+                const title = card.querySelector('.service-title');
+                const description = card.querySelector('.service-description');
+
+                // Initial 3D rotation state
+                gsap.set(card, { rotationX: 0, rotationY: 0, z: 0 });
+
+                card.addEventListener('mouseenter', () => {
+                    // Card Scale and Shadow
+                    gsap.to(card, {
+                        scale: 1.03,
+                        boxShadow: "0 15px 30px rgba(0,0,0,0.2)",
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+
+                    // Icon Animation
+                    gsap.to(icon, {
+                        scale: 1.2,
+                        rotation: 10, // Slight rotation
+                        color: "#FF8C00", // Change icon color to orange
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+
+                    // Text Micro-interaction
+                    gsap.to([title, description], {
+                        y: -5, // Move text slightly up
+                        duration: 0.2,
+                        ease: "power1.out"
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    // Card Scale and Shadow Reset
+                    gsap.to(card, {
+                        scale: 1,
+                        boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                        rotationX: 0, // Reset 3D rotation
+                        rotationY: 0, // Reset 3D rotation
+                        z: 0,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+
+                    // Icon Animation Reset
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotation: 0,
+                        color: "#4CAF50", // Reset icon color to green
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+
+                    // Text Micro-interaction Reset
+                    gsap.to([title, description], {
+                        y: 0, // Reset text position
+                        duration: 0.3,
+                        ease: "power1.out"
+                    });
+                });
+
+                // 3D Tilt/Parallax Effect
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+
+                    const offsetX = (e.clientX - centerX) / rect.width; // -0.5 to 0.5
+                    const offsetY = (e.clientY - centerY) / rect.height; // -0.5 to 0.5
+
+                    const tiltX = offsetY * 10; // Max tilt 10 degrees
+                    const tiltY = -offsetX * 10; // Max tilt 10 degrees (negative for natural feel)
+
+                    gsap.to(card, {
+                        rotationX: tiltX,
+                        rotationY: tiltY,
+                        z: 50, // Push card forward slightly
+                        duration: 0.2,
+                        ease: "power1.out"
+                    });
+                });
+            });
+
+            // Initialize Testimonial Swiper
+            const mySwiper = new Swiper('.testimonials-slider', {
+                loop: true, // Loop infinitely
+                autoplay: {
+                    delay: 5000, // Auto-rotate every 5 seconds
+                    disableOnInteraction: false, // Keep autoplaying after manual interaction
+                },
+                speed: 800, // Smooth transition speed
+                slidesPerView: 1, // Default to 1 testimonial per view on small screens
+                spaceBetween: 30, // Space between slides
+
+                // Responsive breakpoints
+                breakpoints: {
+                    640: { // md breakpoint
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    768: { // lg breakpoint
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    1024: { // xl breakpoint
+                        slidesPerView: 2,
+                        spaceBetween: 40,
+                    },
+                },
+
+                // If we need pagination
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+
+                // Navigation arrows
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+
+                // GSAP animation on slide change
+                on: {
+                    init: function () {
+                        // Animate initial active slide
+                        const activeSlide = this.slides[this.activeIndex];
+                        if (activeSlide) {
+                            animateTestimonialCard(activeSlide);
+                        }
+                    },
+                    slideChangeTransitionEnd: function () {
+                        // Animate active slide after transition
+                        const activeSlide = this.slides[this.activeIndex];
+                        if (activeSlide) {
+                            animateTestimonialCard(activeSlide);
+                        }
+                    },
+                    slideChangeTransitionStart: function() {
+                        // Reset animations on leaving slide
+                        const previousSlide = this.slides[this.previousIndex];
+                        if (previousSlide) {
+                            resetTestimonialCard(previousSlide);
+                        }
+                    }
+                }
+            });
+
+            // Testimonial Card Hover Effects (already implemented, but ensure it works with new structure)
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            testimonialCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        scale: 1.02,
+                        boxShadow: "0 15px 30px rgba(0,0,0,0.15)",
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                    // Optional: Animate avatar border on hover
+                    gsap.to(card.querySelector('.user-avatar'), {
+                        borderColor: "#FF8C00", // Orange
+                        duration: 0.3
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+                    // Optional: Reset avatar border on leave
+                    gsap.to(card.querySelector('.user-avatar'), {
+                        borderColor: "#4CAF50", // Green
+                        duration: 0.4
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
